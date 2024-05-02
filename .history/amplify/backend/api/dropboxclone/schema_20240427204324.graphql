@@ -1,0 +1,21 @@
+type File @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Admin"]}]) {
+  id: ID!
+  name: String!
+  url: String!
+  owner: String @index(name: "byOwner") # This creates the index.
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  versions: [FileVersion] @hasMany(indexName: "byFile", fields: ["id"])
+  sharedWith: [User] @manyToMany(relationName: "FileUserShared")
+}
+
+type User @model @auth(rules: [
+  { allow: owner },
+  { allow: groups, groups: ["Admin"] }
+]) {
+  id: ID!
+  username: String!
+  email: String!
+  files: [File] @hasMany(indexName: "byOwner") # This references the index.
+  sharedFiles: [File] @manyToMany(relationName: "FileUserShared")
+}

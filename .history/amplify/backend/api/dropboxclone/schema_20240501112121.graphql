@@ -1,0 +1,26 @@
+type User @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  username: String @index(name: "byUsername")  # Unique identifier for user login
+  email: String @index(name: "byEmail")        # User's email for notifications and recovery
+  ownedFiles: [File] @hasMany                  # List of files owned by the user
+}
+
+type File @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  name: String                                # Display name of the file
+  storagePath: String                         # S3 path or other storage path
+  ownerId: ID!                                # Connects file to its owner
+  owner: User @belongsTo(fields: ["ownerId"]) # The user who owns this file
+  createdAt: AWSDateTime                      # Creation date of the file
+  updatedAt: AWSDateTime                      # Last update date of the file
+  versions: [FileVersion] @hasMany             # Historical versions of the file
+}
+
+type FileVersion @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  fileId: ID!                                 # Connects the version to its file
+  file: File @belongsTo(fields: ["fileId"])   # The file this version belongs to
+  versionNumber: String                       # Semantic versioning or simple increment
+  url: String                                 # URL to access this version of the file
+  createdAt: AWSDateTime                      # When this version was created
+}

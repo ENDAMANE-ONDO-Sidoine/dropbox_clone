@@ -1,0 +1,34 @@
+type File @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  name: String!
+  url: String!
+  owner: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  versions: [FileVersion] @hasMany(indexName: "byFile", fields: ["id"])
+  sharedWith: [User] @manyToMany(relationName: "FileUserShared")
+}
+
+type FileVersion @model {
+  id: ID!
+  fileID: ID! @index(name: "byFile", sortKeyFields: ["createdAt"])
+  version: String!
+  url: String!
+  createdAt: AWSDateTime
+}
+
+type User @model {
+  id: ID!
+  username: String!
+  email: String!
+  files: [File] @hasMany(indexName: "byOwner", fields: ["username"])
+  sharedFiles: [File] @manyToMany(relationName: "FileUserShared")
+}
+
+scalar Upload
+
+type Mutation {
+  uploadFile(name: String!, file: Upload!): File
+  deleteFile(id: ID!): File
+  updateFile(id: ID!, name: String, url: String): File
+}

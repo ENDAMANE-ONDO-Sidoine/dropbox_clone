@@ -1,0 +1,59 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-dropboxclone-dev-cd900-authRole",
+      "UnauthRoleArn": "arn:aws:iam::609170532317:role/amplify-dropboxclone-dev-cd900-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::609170532317:role/amplify-dropboxclone-dev-cd900-authRole",
+      "Region": "us-west-1",
+      "DeploymentBucketName": "amplify-dropboxclone-dev-cd900-deployment",
+      "UnauthRoleName": "amplify-dropboxclone-dev-cd900-unauthRole",
+      "StackName": "amplify-dropboxclone-dev-cd900",
+      "StackId": "arn:aws:cloudformation:us-west-1:609170532317:stack/amplify-dropboxclone-dev-cd900/f9e660f0-ff9c-11ee-a043-067186cbebe3",
+      "AmplifyAppId": "d73vbmodtfeli"
+    },
+    "categories": {
+      "function": {
+        "S3Trigger07274ce7": {
+          "deploymentBucketName": "amplify-dropboxclone-dev-cd900-deployment",
+          "s3Key": "amplify-builds/S3Trigger07274ce7-37627a70527646463756-build.zip"
+        }
+      },
+      "storage": {
+        "s37f584002": {}
+      },
+      "auth": {
+        "dropboxclone7fcf5f1b": {}
+      }
+    }
+  },
+  "newtydev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-dropboxclone-newtydev-c1a02-authRole",
+      "UnauthRoleArn": "arn:aws:iam::609170532317:role/amplify-dropboxclone-newtydev-c1a02-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::609170532317:role/amplify-dropboxclone-newtydev-c1a02-authRole",
+      "Region": "us-west-1",
+      "DeploymentBucketName": "amplify-dropboxclone-newtydev-c1a02-deployment",
+      "UnauthRoleName": "amplify-dropboxclone-newtydev-c1a02-unauthRole",
+      "StackName": "amplify-dropboxclone-newtydev-c1a02",
+      "StackId": "arn:aws:cloudformation:us-west-1:609170532317:stack/amplify-dropboxclone-newtydev-c1a02/9c3d31a0-04e6-11ef-ab08-02ed0e6c8e05",
+      "AmplifyAppId": "d73vbmodtfeli"
+    },
+    "categories": {
+      "auth": {
+        "dropboxclone7fcf5f1b": {}
+      },
+      "function": {
+        "S3Trigger07274ce7": {
+          "deploymentBucketName": "amplify-dropboxclone-newtydev-c1a02-deployment",
+          "s3Key": "amplify-builds/S3Trigger07274ce7-37627a70527646463756-build.zip"
+        }
+      },
+      "api": {
+        "dropboxclone": {}
+      },
+      "storage": {
+        "s37f584002": {}
+      }
+    }
+  }
+}

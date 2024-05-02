@@ -1,0 +1,77 @@
+type User @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  username: String @index(name: "byUsername")
+  email: String @index(name: "byEmail")
+  ownedFiles: [File] @hasMany(field: "owner")
+}
+
+type File @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  title: String! # Changed from 'name' to 'title' for clarity.
+  storagePath: String! # Changed from 'path' to 'storagePath' to avoid ambiguity.
+  owner: User @belongsTo(field: "ownedFiles")
+  creationDate: AWSDateTime @index(name: "byCreationDate") # Added indexing on creation date.
+  lastUpdated: AWSDateTime
+  versionHistory: [FileVersion] @hasMany
+}
+
+type FileVersion @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  parentFile: File @belongsTo(field: "versionHistory")
+  versionLabel: String!
+  resourceURL: String!
+  timestamp: AWSDateTime
+}
+
+type Query {
+  listUserFiles(userId: ID!): [File] @function(name: "listUserFiles-${env}")
+  fetchFileVersion(fileId: ID!, version: String!): FileVersion @function(name: "fetchFileVersion-${env}")
+}
+
+input FileCreateInput {
+  title: String!
+  storagePath: String!
+}
+
+input FileUpdateInput {
+  id: ID!
+  title: String
+  storagePath: String
+}
+
+input FileDeleteInput {
+  id: ID!
+}
+
+input FileFilterInput {
+  id: ModelIDFilterInput
+  title: ModelStringFilterInput
+  storagePath: ModelStringFilterInput
+  creationDate: ModelStringFilterInput
+  lastUpdated: ModelStringFilterInput
+}
+
+input ModelIDFilterInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+}
+
+input ModelStringFilterInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  startsWith: String
+}

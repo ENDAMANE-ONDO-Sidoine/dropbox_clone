@@ -1,0 +1,30 @@
+type File @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Admin"]}]) {
+  id: ID!
+  name: String!
+  url: String!
+  owner: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  versions: [FileVersion] @hasMany(indexName: "byFile", fields: ["id"])
+  sharedWith: [User] @manyToMany(relationName: "FileUserShared")
+}
+
+type FileVersion @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Admin"]}]) {
+  id: ID!
+  fileID: ID!
+  file: File @belongsTo(fields: ["fileID"])
+  version: String!
+  url: String!
+  createdAt: AWSDateTime
+}
+
+type User @model @auth(rules: [
+  { allow: owner },
+  { allow: groups, groups: ["Admin"] }
+]) {
+  id: ID!
+  username: String!
+  email: String!
+  files: [File] @hasMany(indexName: "byOwner", fields: ["username"])
+  sharedFiles: [File] @manyToMany(relationName: "FileUserShared")
+}

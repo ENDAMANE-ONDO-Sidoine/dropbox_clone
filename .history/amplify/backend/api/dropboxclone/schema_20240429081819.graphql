@@ -1,0 +1,26 @@
+type User @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  username: String @index(name: "byUsername")
+  email: String @index(name: "byEmail")
+  ownedFiles: [File] @hasMany
+}
+
+type File @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  name: String
+  storagePath: String
+  ownerId: ID!  # Links this file to its owner User
+  owner: User @belongsTo(fields: ["ownerId"])
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  versions: [FileVersion] @hasMany
+}
+
+type FileVersion @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  file: File @belongsTo(fields: ["fileId"])
+  fileId: ID!  # This field connects the FileVersion to its File.
+  versionNumber: String!
+  url: String!
+  createdAt: AWSDateTime
+}

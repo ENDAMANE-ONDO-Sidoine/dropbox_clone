@@ -1,0 +1,30 @@
+type File @model {
+  id: ID!
+  name: String!
+  url: String!
+  owner: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  versions: [FileVersion] @connection(keyName: "byFile", fields: ["id"])
+  sharedWith: [User] @connection(keyName: "bySharedFile", fields: ["id"])
+}
+
+type User @model {
+  id: ID!
+  username: String!
+  email: String!
+  files: [File] @connection(keyName: "byOwner", fields: ["username"])
+  sharedFiles: [File] @connection(keyName: "bySharedUser", fields: ["id"])
+}
+
+type Mutation {
+  uploadFile(name: String!, file: Upload!): File
+  deleteFile(id: ID!): File
+  updateFile(id: ID!, name: String, url: String): File
+  shareFile(fileId: ID!, userId: ID!): File @function(name: "shareFile-${env}")
+  unshareFile(fileId: ID!, userId: ID!): File @function(name: "unshareFile-${env}")
+}
+
+type Query {
+  getSharedFiles(userId: ID!): [File]
+}

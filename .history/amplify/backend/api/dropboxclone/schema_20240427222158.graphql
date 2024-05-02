@@ -1,0 +1,86 @@
+type User @model @auth(rules: [
+  { allow: owner },
+  { allow: private, provider: iam, operations: [read] }
+]) {
+  id: ID!
+  username: String
+  email: String
+  files: [File] @hasMany
+}
+
+type File @model @auth(rules: [
+  { allow: owner },
+  { allow: private, provider: iam, operations: [read] }
+]) {
+  id: ID!
+  name: String!
+  path: String!
+  owner: User @belongsTo
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  versions: [FileVersion] @hasMany
+}
+
+type FileVersion @model @auth(rules: [
+  { allow: owner },
+  { allow: private, provider: iam, operations: [read] }
+]) {
+  id: ID!
+  file: File @belongsTo
+  versionNumber: String!
+  url: String!
+  createdAt: AWSDateTime
+}
+
+type Query {
+  listFilesByUser(userId: ID!): [File] @function(name: "listFilesByUser-${env}")
+  getFileByVersion(fileId: ID!, versionNumber: String!): FileVersion @function(name: "getFileByVersion-${env}")
+}
+
+input CreateFileInput {
+  name: String!
+  path: String!
+}
+
+input UpdateFileInput {
+  id: ID!
+  name: String
+  path: String
+}
+
+input DeleteFileInput {
+  id: ID!
+}
+
+input ModelFileFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  path: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+}

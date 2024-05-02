@@ -1,0 +1,26 @@
+type S3Object {
+  bucket: String!
+  region: String!
+  key: String
+}
+
+type User @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  username: String
+  email: String
+  files: [File] @hasMany
+}
+
+type File @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  name: String
+  owner: String
+  file: S3Object
+  versions: [FileVersion] @hasMany
+}
+
+type FileVersion @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  versionNumber: String!
+  file: File @belongsTo
+}
