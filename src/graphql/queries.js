@@ -61,6 +61,8 @@ export const getFile = /* GraphQL */ `
         nextToken
         __typename
       }
+      bucket
+      region
       userOwnedFilesId
       __typename
     }
@@ -80,6 +82,8 @@ export const listFiles = /* GraphQL */ `
         ownerId
         createdAt
         updatedAt
+        bucket
+        region
         userOwnedFilesId
         __typename
       }
@@ -100,6 +104,8 @@ export const getFileVersion = /* GraphQL */ `
         ownerId
         createdAt
         updatedAt
+        bucket
+        region
         userOwnedFilesId
         __typename
       }

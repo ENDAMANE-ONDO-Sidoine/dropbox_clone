@@ -51,8 +51,11 @@
       "api": {
         "dropboxclone": {}
       },
+      "hosting": {
+        "S3AndCloudFront": {}
+      },
       "storage": {
-        "s37f584002": {}
+        "s30723f8e7": {}
       }
     }
   }

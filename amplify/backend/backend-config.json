@@ -62,6 +62,12 @@
       "service": "Lambda"
     }
   },
+  "hosting": {
+    "S3AndCloudFront": {
+      "providerPlugin": "awscloudformation",
+      "service": "S3AndCloudFront"
+    }
+  },
   "parameters": {
     "AMPLIFY_function_S3Trigger07274ce7_deploymentBucketName": {
       "usedBy": [
@@ -81,18 +87,8 @@
     }
   },
   "storage": {
-    "s37f584002": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn",
-            "LambdaExecutionRole"
-          ],
-          "category": "function",
-          "resourceName": "S3Trigger07274ce7"
-        }
-      ],
+    "s30723f8e7": {
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "S3"
     }

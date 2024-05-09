@@ -86,6 +86,8 @@ export const onCreateFile = /* GraphQL */ `
         nextToken
         __typename
       }
+      bucket
+      region
       userOwnedFilesId
       __typename
     }
@@ -116,6 +118,8 @@ export const onUpdateFile = /* GraphQL */ `
         nextToken
         __typename
       }
+      bucket
+      region
       userOwnedFilesId
       __typename
     }
@@ -146,6 +150,8 @@ export const onDeleteFile = /* GraphQL */ `
         nextToken
         __typename
       }
+      bucket
+      region
       userOwnedFilesId
       __typename
     }
@@ -166,6 +172,8 @@ export const onCreateFileVersion = /* GraphQL */ `
         ownerId
         createdAt
         updatedAt
+        bucket
+        region
         userOwnedFilesId
         __typename
       }
@@ -194,6 +202,8 @@ export const onUpdateFileVersion = /* GraphQL */ `
         ownerId
         createdAt
         updatedAt
+        bucket
+        region
         userOwnedFilesId
         __typename
       }
@@ -222,6 +232,8 @@ export const onDeleteFileVersion = /* GraphQL */ `
         ownerId
         createdAt
         updatedAt
+        bucket
+        region
         userOwnedFilesId
         __typename
       }
